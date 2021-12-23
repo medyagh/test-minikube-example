@@ -13,11 +13,8 @@ jobs:
   build:
     strategy:
       matrix:
-        include:
-          - os: ubuntu-latest
-            driver: ''
-          - os: macos-10.15
-            driver: ''
+          os: [ubuntu-latest, macos-10.15]
+          container-runtime: ['', 'containerd', 'crio']
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
@@ -35,12 +32,19 @@ jobs:
       - name: Start minikube
         uses: medyagh/setup-minikube@latest
         with:
-          driver: ${{ matrix.driver }}
+          container-runtime: ${{ matrix.container-runtime }}
       - name: Try the cluster !
         run: kubectl get pods -A
       - name: Use Docker-Env Feature
+        if: matrix.container-runtime == ''
         run: | 
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
           docker images
+      - name: Use Podman-Env Feature
+        if: matrix.container-runtime == 'crio'
+        run: | 
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube podman-env)
+          minikube ssh podman images
 
