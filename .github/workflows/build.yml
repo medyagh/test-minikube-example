@@ -30,11 +30,11 @@ jobs:
       - name: Install Kubectl
         uses: azure/setup-kubectl@v1
       - name: Start minikube
-        uses: medyagh/setup-minikube@latest
+        uses: medyagh/setup-minikube@v0.0.7
         with:
           container-runtime: ${{ matrix.container-runtime }}
       - name: Start minikube Again for fun
-        uses: medyagh/setup-minikube@latest
+        uses: medyagh/setup-minikube@v0.0.7
         with:
           container-runtime: ${{ matrix.container-runtime }}
       - name: Try the cluster !
