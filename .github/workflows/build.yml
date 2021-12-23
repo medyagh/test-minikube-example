@@ -32,7 +32,7 @@ jobs:
       - name: Start minikube
         uses: medyagh/setup-minikube@latest
         with:
-          driver: ${{ matrix.driver }}
+          container-runtime: ${{ matrix.container-runtime }}
       - name: Try the cluster !
         run: kubectl get pods -A
       - name: Use Docker-Env Feature
