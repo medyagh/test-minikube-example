@@ -36,8 +36,15 @@ jobs:
       - name: Try the cluster !
         run: kubectl get pods -A
       - name: Use Docker-Env Feature
+        if: matrix.container-rutnime == ''
         run: | 
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
           docker images
+      - name: Use Podman-Env Feature
+        if: matrix.container-rutnime == 'crio'
+        run: | 
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube podman-env)
+          minikube ssh podman images
 
