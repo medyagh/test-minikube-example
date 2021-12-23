@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-ubuntu:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          os: macos-latest
+          os: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+      - name: Install Kubectl
+        uses: azure/setup-kubectl@v1
+      - name: Try the cluster !
+        run: kubectl get pods -A
+      - name: Use Docker-Env Feature
+        run: | 
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker images
+
