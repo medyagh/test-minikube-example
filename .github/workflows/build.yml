@@ -13,11 +13,8 @@ jobs:
   build:
     strategy:
       matrix:
-        include:
-          - os: ubuntu-latest
-            driver: ''
-          - os: macos-10.15
-            driver: ''
+          os: [ubuntu-latest, macos-10.15]
+          container-runtime: ['', 'containerd', 'crio']
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
