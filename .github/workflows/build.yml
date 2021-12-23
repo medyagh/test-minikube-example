@@ -8,13 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-ubuntu:
-    runs-on: ${{ matrix.os }}
+  build:
     strategy:
       matrix:
-        include:
-          os: macos-latest
-          os: ubuntu-latest
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - name: Start minikube
