@@ -27,7 +27,7 @@ jobs:
         with:
           driver: ${{ matrix.driver }}
       - name: Install Tools for MacOs
-        if: runner.os == 'macOS'
+        if: matrix.os == 'macos-latest'
         run: |
           brew install docker-machine docker
           brew cask install virtualbox
@@ -35,7 +35,7 @@ jobs:
           VBoxManage --version
           sysctl hw.physicalcpu hw.logicalcpu 
       - name: Install Tools for Windows
-        if: runner.os == 'windows'
+        if: matrix.os == 'windows-latest'
         run: |
             Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Tools-All
       - name: Install Kubectl
