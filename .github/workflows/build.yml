@@ -22,10 +22,6 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v2
-      - name: Start minikube
-        uses: medyagh/setup-minikube@master
-        with:
-          driver: ${{ matrix.driver }}
       - name: Install Tools for MacOs
         if: matrix.os == 'macos-latest'
         run: |
@@ -40,6 +36,11 @@ jobs:
             Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Tools-All
       - name: Install Kubectl
         uses: azure/setup-kubectl@v1
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+        with:
+          driver: ${{ matrix.driver }}
+
       - name: Try the cluster !
         run: kubectl get pods -A
       - name: Use Docker-Env Feature
