@@ -26,7 +26,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           brew install docker-machine docker
-          brew cask install virtualbox
+          brew install --cask virtualbox
           sudo docker --version
           VBoxManage --version
           sysctl hw.physicalcpu hw.logicalcpu 
@@ -34,6 +34,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
             Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Tools-All
+        continue-on-error: false
       - name: Install Kubectl
         uses: azure/setup-kubectl@v1
       - name: Start minikube
