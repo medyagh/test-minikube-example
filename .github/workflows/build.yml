@@ -32,6 +32,7 @@ jobs:
       - name: Start minikube
         uses: medyagh/setup-minikube@latest
         with:
+          minikube-version: stable
           container-runtime: ${{ matrix.container-runtime }}
       - name: Start minikube Again for fun
         uses: medyagh/setup-minikube@latest
